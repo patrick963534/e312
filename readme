@@ -15,12 +15,14 @@ libsl project folder tree
 
             libc/
                 include/
+                    sl/
                 src/
                 lib/
                 bin/
 
             pthread/
                 include/
+                    sl/
                 lib/
                     bsd/ linux/ windows/
                 bin/
@@ -28,6 +30,7 @@ libsl project folder tree
                 
             opengl/
                 include/
+                    sl/
                 bin/
                     bsd/ linux/ windows/
                 lib/
@@ -35,6 +38,7 @@ libsl project folder tree
 
             openal/
                 include/
+                    sl/
                 bin/
                     bsd/ linux/ windows/
                 lib/
