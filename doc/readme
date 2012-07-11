@@ -83,5 +83,6 @@ ABOUT libsl
         ~. typedef float    sl_f;   // for float. (don't use double.)
 
     - REMARK:
-        I want these whole thing can be built to static lib. (I remember the 3D tool 'blender' also use static build.)
+        ~. I want these whole thing can be built to static lib. (I remember the 3D tool 'blender' also use static build.)
+        ~. The whole libc use UTF-8.
        
