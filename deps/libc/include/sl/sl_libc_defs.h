@@ -8,6 +8,9 @@
 #define     double      sl_d;   /* double:      8 bytes. */
 #define     long long   sl_l;   /* long long:   8 bytes. */
 
+#define     unsigned int        sl_ui;  /* unsigned int:        4 bytes. */
+#define     unsigned long long  sl_ul;  /* unsigned long long:  4 bytes. */
+
 #define     extern      SL_API
 
 #endif
