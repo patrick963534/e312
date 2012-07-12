@@ -76,6 +76,7 @@ ABOUT libsl
             #. sleep
             #. socket
             #. folder/path functions 
+
     - only 4 basic type:
         ~. typedef int      sl_i;   // for int.
         ~. typedef char     sl_c;   // for char.
@@ -85,4 +86,10 @@ ABOUT libsl
     - REMARK:
         ~. I want these whole thing can be built to static lib. (I remember the 3D tool 'blender' also use static build.)
         ~. The whole libc use UTF-8.
+        ~. Find a way to avoid "Memory out of bound" usage. For example: 
+                char *str = malloc(8);
+                str[8] = '\0'; // out of bound.
+                free(str);     // might will get exception, and kills me.
+            #. For data, I can use sl_c type.
+            #. For string, I need to use custom type sl_string_t instead.
        
