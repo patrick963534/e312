@@ -1,10 +1,12 @@
-#ifndef __SL_DEFS_H__
-#define __SL_DEFS_H__
+#ifndef __SL_LIBC_DEFS_H__
+#define __SL_LIBC_DEFS_H__
 
-#define     int         sl_i;   /* signed int. */
-#define     char        sl_c;   /* only use for data. for string, please use sl_string_t instead. */
-#define     int         sl_b;   /* boolean */
-#define     float       sl_f;   /* DO NOT use double type. */
+#define     char        sl_c;   /* char:        1 bytes. */
+#define     int         sl_i;   /* int:         4 bytes. */
+#define     int         sl_b;   /* boolean:     4 bytes. */
+#define     float       sl_f;   /* float:       4 bytes. */
+#define     double      sl_d;   /* double:      8 bytes. */
+#define     long long   sl_l;   /* long long:   8 bytes. */
 
 #define     extern      SL_API
 
