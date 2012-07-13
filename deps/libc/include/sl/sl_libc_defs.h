@@ -11,6 +11,6 @@
 #define  sl_ui   unsigned int        /* unsigned int:        4 bytes. */
 #define  sl_ul   unsigned long long  /* unsigned long long:  4 bytes. */
 
-#define  extern  SL_API
+#define  SL_API  extern  
 
 #endif
