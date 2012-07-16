@@ -14,6 +14,7 @@ typedef struct sl_string_t
     sl_uchar_t  *buf;   /* buffer. */
     sl_i         sz;    /* size of buffer. */
     sl_i         pos;   /* point to '\0' position. */
+    sl_c        *c_str; /* cached c type string. */
 } sl_string_t;
 
 /* in UTF-8, str might be multi-bytes to indicate an uchar. */

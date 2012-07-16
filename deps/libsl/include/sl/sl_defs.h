@@ -10,4 +10,8 @@
 #define sl_min(a, b)        ((a) < (b) ? (a) : (b))
 #define sl_max(a, b)        ((a) < (b) ? (b) : (a))
 
+#ifndef NULL
+    #define NULL ((void*)0)
+#endif
+
 #endif

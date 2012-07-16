@@ -4,7 +4,9 @@
 int main()
 {
     sl_string_t *str = sl_string_new("123456789012345");
-
     printf("%s\n", sl_string_to_char_array(str));
+
+    sl_object_delete(str);
+
     return 1;
 }

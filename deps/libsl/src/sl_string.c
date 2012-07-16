@@ -74,6 +74,7 @@ SL_API sl_string_t* sl_string_new(const sl_c *str)
     me->sz = BUF_INIT_SZ;
     me->buf = (sl_uchar_t*)sl_memory_new(me->sz * sizeof(me->buf[0]));
     me->pos = 0;
+    me->c_str = NULL;
 
     if (str)
         do_append_string(me, str);
@@ -102,6 +103,9 @@ SL_API sl_c* sl_string_to_char_array(sl_string_t *me)
     sl_i  i, j, bsz;
     sl_i  sz, c;
 
+    if (me->c_str)
+        sl_memory_delete(me->c_str);
+
     sz = me->pos + 1;
     ret = sl_memory_new(sz);
     pos = ret;
@@ -124,6 +128,7 @@ SL_API sl_c* sl_string_to_char_array(sl_string_t *me)
         }
     }
 
+    me->c_str = ret;
     return ret;
 }
 
@@ -151,5 +156,8 @@ SL_API sl_b sl_string_equals(sl_string_t *me, sl_string_t *str)
 SL_API void sl_string_destruct(sl_string_t *me)
 {
     sl_memory_delete(me->buf);
+
+    if (me->c_str)
+        sl_memory_delete(me->c_str);
 }
 
