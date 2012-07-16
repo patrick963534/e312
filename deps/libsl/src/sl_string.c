@@ -54,14 +54,24 @@ static void do_append_string(sl_string_t *me, const sl_c *str)
 SL_API sl_uchar_t sl_uchar_from_char_array(sl_c *str)
 {
     sl_uchar_t ch;
+
+    assert(str);
+
+    ch = str[0];
+
     /* TODO */
     return ch;
 }
 
 SL_API sl_c* sl_uchar_to_char_array(sl_uchar_t ch)
 {
+    sl_c *buf;
+
+    buf = sl_memory_new(1);
+    buf[0] = (sl_c)ch;
+
     /* TODO */
-    return 0;
+    return buf;
 }
 
 SL_API sl_string_t* sl_string_new(const sl_c *str)

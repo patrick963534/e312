@@ -19,6 +19,8 @@ typedef struct sl_string_t
 
 /* in UTF-8, str might be multi-bytes to indicate an uchar. */
 SL_API sl_uchar_t   sl_uchar_from_char_array(sl_c *str);
+
+/* without '\0' in the returning value.
 SL_API sl_c*        sl_uchar_to_char_array(sl_uchar_t ch);
 
 SL_API sl_string_t* sl_string_new(const sl_c *str);
