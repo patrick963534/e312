@@ -21,9 +21,9 @@ static sl_i get_next_ucs(const sl_c *str, sl_i *offset)
 
 static void do_append_string(sl_string_t *me, const sl_c *str)
 {
-    sl_i *t;
-    sl_i ucs;
-    sl_i offset;
+    sl_uchar_t  *t;
+    sl_i         ucs;
+    sl_i         offset;
 
     sl_assert(me->pos < me->sz);
 
@@ -46,9 +46,22 @@ static void do_append_string(sl_string_t *me, const sl_c *str)
         }
     }
 
-    me->buf[me->pos] = '\0';
+    *t = '\0';
 
     sl_assert(me->pos < me->sz);
+}
+
+SL_API sl_uchar_t sl_uchar_from_char_array(sl_c *str)
+{
+    sl_uchar_t ch;
+    /* TODO */
+    return ch;
+}
+
+SL_API sl_c* sl_uchar_to_char_array(sl_uchar_t ch)
+{
+    /* TODO */
+    return 0;
 }
 
 SL_API sl_string_t* sl_string_new(const sl_c *str)
@@ -59,13 +72,27 @@ SL_API sl_string_t* sl_string_new(const sl_c *str)
 
     me->destruct = (sl_destruct_func)sl_string_destruct;
     me->sz = BUF_INIT_SZ;
-    me->buf = (sl_i*)sl_memory_new(me->sz * sizeof(me->buf[0]));
+    me->buf = (sl_uchar_t*)sl_memory_new(me->sz * sizeof(me->buf[0]));
     me->pos = 0;
 
     if (str)
         do_append_string(me, str);
 
     return me;
+}
+
+SL_API sl_uchar_t sl_string_uchar_get(sl_string_t *me, sl_i index)
+{
+    sl_assert(index <= me->pos);
+
+    return me->buf[index];
+}
+
+SL_API void sl_string_uchar_set(sl_string_t *me, sl_uchar_t ch, sl_i index)
+{
+    sl_assert(index <= me->pos);
+
+    me->buf[index] = ch;
 }
 
 SL_API sl_c* sl_string_to_char_array(sl_string_t *me)
@@ -103,6 +130,22 @@ SL_API sl_c* sl_string_to_char_array(sl_string_t *me)
 SL_API void sl_string_format(sl_string_t *me, sl_c *format, ...)
 {
 
+}
+
+SL_API sl_b sl_string_equals(sl_string_t *me, sl_string_t *str)
+{
+    sl_uchar_t *s = me->buf;
+    sl_uchar_t *d = str->buf;
+
+    assert(s != 0 && d != 0);
+    
+    while (*s && *d)
+    {
+        if (*s != *d)
+            return 0;
+    }
+
+    return 1;
 }
 
 SL_API void sl_string_destruct(sl_string_t *me)
