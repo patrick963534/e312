@@ -1,5 +1,32 @@
 ****************************************************************************************************
 
+todo:
+
+    - Garbage collector?
+        Makes codes clean, but doesn't free memory at the right time, that isn't  a good habit.
+
+    - Memory Leak Detect?
+        #. Call stack?
+            ~. use SL_MTSand SL_MTS_END, ex:
+
+                    static void func(...)
+                    SL_MTS_BEGIN
+                        // codes...
+                    SL_MTS_END
+
+
+    - Stack usage?
+        I don't want this. Make things compilicate, and memory out of bound written issue.
+
+    - memory alloc/free transaction?
+        use to help do stack memory free? Then I don't need to free them one by one.
+
+    - For sound?
+        use a seperate application just for sound, and UDP socket send sound data. (This APP just need to recieve commands.)
+            ~. Sound thing usually un-stable for me, and CROSS-Platform issue, and kinds of plugin etc.
+
+****************************************************************************************************
+
 sl_object_t 
 
     - serial_check_id

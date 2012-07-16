@@ -1,5 +1,6 @@
 #include <sl/sl_object.h>
 #include <sl/sl_memory.h>
+#include <sl/sl_libc_stdlib.h>
 
 #define SL_SERIAL_CHECK_ID      0xf1f1a1a1
 #define SL_HEAP_CHECK_ID        0xe1e1b1b2
@@ -14,7 +15,7 @@ SL_API sl_object_t* sl_object_new(sl_i sz)
 {
     sl_object_t *me;
 
-    assert(sizeof(*me) >= sz);
+    assert(sizeof(*me) <= sz);
     
     me = (sl_object_t*)sl_memory_new(sz);
 

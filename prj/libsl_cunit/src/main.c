@@ -3,6 +3,8 @@
 
 int main()
 {
-    sl_string_t str;
+    sl_string_t *str = sl_string_new("123456789012345");
+
+    printf("%s\n", str->buf);
     return 1;
 }
