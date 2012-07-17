@@ -51,7 +51,7 @@ static void do_append_string(sl_string_t *me, const sl_c *str)
     sl_assert(me->pos < me->sz);
 }
 
-SL_API sl_uchar_t sl_uchar_from_char_array(sl_c *str)
+SL_API sl_uchar_t sl_uchar_from_u8(sl_c *str)
 {
     sl_uchar_t ch;
 
@@ -63,7 +63,7 @@ SL_API sl_uchar_t sl_uchar_from_char_array(sl_c *str)
     return ch;
 }
 
-SL_API sl_c* sl_uchar_to_char_array(sl_uchar_t ch)
+SL_API sl_c* sl_uchar_to_u8(sl_uchar_t ch)
 {
     sl_c *buf;
 
@@ -142,7 +142,7 @@ SL_API sl_c* sl_string_to_char_array(sl_string_t *me)
     return ret;
 }
 
-SL_API void sl_string_format(sl_string_t *me, sl_c *format, ...)
+SL_API sl_string_t* sl_string_format(sl_string_t *format, ...)
 {
 
 }

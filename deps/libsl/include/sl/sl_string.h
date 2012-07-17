@@ -4,32 +4,50 @@
 #include <sl/sl_defs.h>
 #include <sl/sl_object.h>
 
-/* ucs char. */
-typedef sl_i sl_uchar_t;
-
+/**
+ Both sl_c* and sl_string_t are used to identify a UTF-8.
+ Only sl_string_t can used to do modification.
+*/ 
 typedef struct sl_string_t
 {
     sl_extends_object();
 
-    sl_uchar_t  *buf;   /* buffer. */
+    sl_c        *c_str; /* buffer. */
     sl_i         sz;    /* size of buffer. */
     sl_i         pos;   /* point to '\0' position. */
-    sl_c        *c_str; /* cached c type string. */
 } sl_string_t;
 
-/* in UTF-8, str might be multi-bytes to indicate an uchar. */
-SL_API sl_uchar_t   sl_uchar_from_char_array(sl_c *str);
-
-/* without '\0' in the returning value.
-SL_API sl_c*        sl_uchar_to_char_array(sl_uchar_t ch);
-
+/**
+ Create a sl_string_t by an UTF-8 string.
+ @str: Assert @str is an UTF-8 string.
+*/
 SL_API sl_string_t* sl_string_new(const sl_c *str);
-SL_API void         sl_string_append(sl_string_t *me, sl_string_t *src);
-SL_API void         sl_string_format(sl_string_t *me, sl_c *format, ...);
-SL_API sl_c*        sl_string_to_char_array(sl_string_t *me);
-SL_API sl_uchar_t   sl_string_uchar_get(sl_string_t *me, sl_i index);
-SL_API void         sl_string_uchar_set(sl_string_t *me, sl_uchar_t ch, sl_i index);
-SL_API sl_b         sl_string_equals(sl_string_t *me, sl_string_t *str);
+
+/**
+ Format a string to create a sl_string_t instance.
+ @fmt: Assert @fmt is an UTF-8 string.
+ Assert the returning value sl_string_t.c_str is an UTF-8 string.
+*/
+SL_API sl_string_t* sl_string_format(const sl_c *fmt, ..);
+
+/**
+ Append a @str string to the end of @me string.
+ @me: Assert @me.c_str is an UTF-8 string.
+ @str: Assert it's an UTF-8 string.
+*/
+SL_API void         sl_string_append(sl_string_t *me, sl_c *str);
+
+/**
+ Get the @n mutli-byte character in @me string.
+ @n: The nth multi-byte character.
+ @return: It's a UTF-8 string, with a multi-byte character.
+*/
+SL_API sl_c*        sl_string_get_char(sl_string_t *me, sl_i n);
+
+/**
+ Update the nth multi-bytes character by @ch in @me string.
+SL_API void         sl_string_set_char(sl_string_t *me, sl_i pos, sl_c *ch);
+SL_API sl_b         sl_string_equals(sl_c *str1, sl_c *str2);
 SL_API void         sl_string_destruct(sl_string_t *me);
 
 #endif
