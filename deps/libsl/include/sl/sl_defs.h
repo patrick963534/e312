@@ -7,6 +7,7 @@
 #define sl_to_me(type_)     type_ *me = (type_*)me_
 #define sl_unused(v)        (void)(v)
 
+#define sl_count(arr)       (sizeof(arr) / sizeof(arr[0]))
 #define sl_min(a, b)        ((a) < (b) ? (a) : (b))
 #define sl_max(a, b)        ((a) < (b) ? (b) : (a))
 

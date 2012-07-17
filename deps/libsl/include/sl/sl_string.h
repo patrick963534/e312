@@ -28,14 +28,14 @@ SL_API sl_string_t* sl_string_new(const sl_c *str);
  @fmt: Assert @fmt is an UTF-8 string.
  Assert the returning value sl_string_t.c_str is an UTF-8 string.
 */
-SL_API sl_string_t* sl_string_format(const sl_c *fmt, ..);
+SL_API sl_string_t* sl_string_format(const sl_c *fmt, ...);
 
 /**
  Append a @str string to the end of @me string.
  @me: Assert @me.c_str is an UTF-8 string.
  @str: Assert it's an UTF-8 string.
 */
-SL_API void         sl_string_append(sl_string_t *me, sl_c *str);
+SL_API void         sl_string_append(sl_string_t *me, const sl_c *str);
 
 /**
  Get the @n mutli-byte character in @me string.
@@ -45,9 +45,21 @@ SL_API void         sl_string_append(sl_string_t *me, sl_c *str);
 SL_API sl_c*        sl_string_get_char(sl_string_t *me, sl_i n);
 
 /**
- Update the nth multi-bytes character by @ch in @me string.
+ Update the nth multi-bytes character to @ch in @me string.
+ @ch: Assert it's an UTF-8 string.
+*/
 SL_API void         sl_string_set_char(sl_string_t *me, sl_i pos, sl_c *ch);
-SL_API sl_b         sl_string_equals(sl_c *str1, sl_c *str2);
+
+/**
+ Check string @str1 and @str2 are the same. We advise @str1 and @str2 are 
+ both UTF-8 string.
+*/
+SL_API sl_b         sl_string_equals(const sl_c *str1, const sl_c *str2);
+
+/**
+ Destructor of sl_string_t, it will be invoked automaticlly  
+ when call sl_object_delete(...) 
+*/
 SL_API void         sl_string_destruct(sl_string_t *me);
 
 #endif
