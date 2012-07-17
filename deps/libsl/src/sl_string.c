@@ -1,5 +1,6 @@
 #include <sl/sl_string.h>
 #include <sl/sl_memory.h>
+#include <sl/sl_libc_string.h>
 
 #define BUF_INIT_SZ 16
 
@@ -76,18 +77,7 @@ SL_API void sl_string_set_char(sl_string_t *me, sl_i pos, sl_c *ch)
 
 SL_API sl_b sl_string_equals(const sl_c *str1, const sl_c *str2)
 {
-    const sl_c *s = str1;
-    const sl_c *d = str2;
-
-    assert(s != 0 && d != 0);
-    
-    while (*s && *d)
-    {
-        if (*s != *d)
-            return 0;
-    }
-
-    return 1;
+    return sl_strcmp(str1, str2) == 0;
 }
 
 SL_API void sl_string_destruct(sl_string_t *me)
