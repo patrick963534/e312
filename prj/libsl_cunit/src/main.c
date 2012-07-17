@@ -4,13 +4,11 @@
 static void test_string(void)
 {
     sl_string_t *str = sl_string_new("1234567890123456");
+    sl_object_delete(str);
 }
 
 int main()
 {
-    printf("%s\n", str->c_str);
-
-    sl_object_delete(str);
-
+    test_string();
     return 1;
 }
