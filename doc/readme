@@ -7,7 +7,7 @@ todo:
 
     - Memory Leak Detect?
         #. Call stack?
-            ~. use SL_MTSand SL_MTS_END, ex:
+            ~. use SL_MTSand SL_MTS_END, ex: (I don't want this, I want the codes should looks clean.)
 
                     static void func(...)
                     SL_MTS_BEGIN
@@ -15,11 +15,11 @@ todo:
                     SL_MTS_END
 
 
-    - Stack usage?
-        I don't want this. Make things compilicate, and memory out of bound written issue.
+    - usage of stack ?
+        I don't want this. Make me in danger, like memory out of bound written issue.
 
     - memory alloc/free transaction?
-        use to help do stack memory free? Then I don't need to free them one by one.
+        use to help do stack memory free? Then I don't need to free them one by one. (Conclusion: NO use of stack.)
 
     - For sound?
         use a seperate application just for sound, and UDP socket send sound data. (This APP just need to recieve commands.)

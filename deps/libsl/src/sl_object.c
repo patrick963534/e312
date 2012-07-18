@@ -20,8 +20,9 @@ SL_API sl_object_t* sl_object_new(sl_i sz)
     me = (sl_object_t*)sl_memory_new(sz);
 
     me->serial_check_id = SL_SERIAL_CHECK_ID;
-    me->valid_check_id = SL_VALID_CHECK_ID;
-    me->destruct = sl_object_destruct;
+    me->valid_check_id  = SL_VALID_CHECK_ID;
+    me->heap_check_id   = SL_HEAP_CHECK_ID;
+    me->destruct        = sl_object_destruct;
 
     return me;
 }
@@ -45,14 +46,14 @@ SL_API void sl_object_delete(void *me_)
     if (!me)
         return;
 
-    sl_assert(me->serial_check_id == SL_SERIAL_CHECK_ID);
     sl_assert(me->valid_check_id  == SL_VALID_CHECK_ID);
+    sl_assert(me->heap_check_id == SL_HEAP_CHECK_ID);
+    sl_assert(me->serial_check_id == SL_SERIAL_CHECK_ID);
     
     if (me->destruct)
         me->destruct(me_);
 
     me->valid_check_id = 0;
 
-    if (me->heap_check_id == SL_HEAP_CHECK_ID)
-        sl_free(me);
+    sl_free(me);
 }

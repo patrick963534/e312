@@ -11,6 +11,9 @@ typedef void (*sl_destruct_func)(void *me_);
     sl_i    heap_check_id;   /* check is heap or stack. */ \
     sl_destruct_func destruct
 
+/**
+ All of the sl_object_t or its derived type have to be in heap.
+*/
 typedef struct sl_object_t
 {
     sl_extends_object();

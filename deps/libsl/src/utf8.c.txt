@@ -21,7 +21,7 @@
 #include <alloca.h>
 #endif
 
-#include "utf8.h"
+#include <sl/utf8.h>
 
 /**
  U+0000  - U+007F    0xxxxxxx
