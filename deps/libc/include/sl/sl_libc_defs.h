@@ -9,6 +9,7 @@
 #define  sl_l    long long   /* long long:   8 bytes. */
 
 #define  sl_ui   unsigned int        /* unsigned int:        4 bytes. */
+#define  sl_uc   unsigned char       /* unsigned char:       4 bytes. */
 #define  sl_ul   unsigned long long  /* unsigned long long:  4 bytes. */
 
 #define  SL_API  extern  

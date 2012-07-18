@@ -4,6 +4,61 @@
 
 #define BUF_INIT_SZ 16
 
+/**
+ U+0000  - U+007F    0xxxxxxx
+ U+0080  - U+07FF    110xxxxx    10xxxxxx
+ U+0800  - U+FFFF    1110xxxx    10xxxxxx    10xxxxxx
+ U+10000 - U+10FFFF  11110xxx    10xxxxxx    10xxxxxx    10xxxxxx
+*/
+
+static const sl_i u8_prefix[6] = {
+    0x00, /* binary: 0. */ 
+    0x06, /* binary: 110. */
+    0x0E, /* binary: 1110. */
+    0x1E, /* binary: 11110. */ 
+    0x3E, /* binary: 111110. */ 
+    0x7E, /* binary: 1111110. */
+};
+
+static const sl_c u8_trail_bytes[256] = {
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+    1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
+    2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 3,3,3,3,3,3,3,3,4,4,4,4,5,5,5,5,
+};
+
+/**
+ Will move to other file which process u8 stuff or charset stuff.
+*/
+static sl_b check_is_u8_string(const sl_c *str)
+{
+    sl_uc *u8;
+    sl_i   nb;
+    sl_i   i;
+
+    u8 = (sl_uc*)str;
+
+    while (*u8) 
+    {
+        nb = u8_trail_bytes[*u8];
+
+        if ((*u8) >> (8 - nb - 2) != u8_prefix[nb])
+            return 0;
+
+        u8++;
+
+        for (i = 1; i < nb + 1; i++, u8++)
+            if (*u8 == 0 || ((*u8) >> 6) != 0x02)
+                return 0;
+    }
+
+    return 1;
+}
+
 SL_API sl_string_t* sl_string_new(const sl_c *str)
 {
     sl_string_t *me;
@@ -33,10 +88,7 @@ SL_API void sl_string_append(sl_string_t *me, const sl_c *str)
     sl_assert(me);
     sl_assert(str);
     sl_assert(me->pos < me->sz);
-
-    /**
-     TODO: Check @str is an UTF-8 string, don't care about performance thing.
-    */
+    sl_assert(check_is_u8_string(str));
 
     t = me->c_str + me->pos;
 
@@ -56,7 +108,6 @@ SL_API void sl_string_append(sl_string_t *me, const sl_c *str)
     *t = '\0';
 
     sl_assert(me->pos < me->sz);
-
 }
 
 SL_API sl_c* sl_string_get_char(sl_string_t *me, sl_i n)
@@ -77,7 +128,18 @@ SL_API void sl_string_set_char(sl_string_t *me, sl_i pos, sl_c *ch)
 
 SL_API sl_b sl_string_equals(const sl_c *str1, const sl_c *str2)
 {
-    return sl_strcmp(str1, str2) == 0;
+    const sl_c *s = str1;
+    const sl_c *d = str2;
+
+    assert(s != 0 && d != 0);
+    
+    while (*s && *d)
+    {
+        if (*s != *d)
+            return 0;
+    }
+
+    return 1;
 }
 
 SL_API void sl_string_destruct(sl_string_t *me)
