@@ -1,21 +1,19 @@
 #include <sl/sl_memory.h>
 #include <sl/sl_libc_stdlib.h>
 
-SL_API void* sl_memory_new_(sl_i sz)
+SL_API void* sl_memory_new_(sl_i sz, SL_DEBUG_FILE_INFO_PARAM)
 {
     return sl_calloc(1, sz);
 }
 
-SL_API void* sl_memory_renew_(void *p, sl_i sz)
+SL_API void* sl_memory_renew_(void *p, sl_i sz, SL_DEBUG_FILE_INFO_PARAM)
 {
     return sl_realloc(p, sz);
 }
 
-SL_API void* sl_memory_delete_(void *p)
+SL_API void sl_memory_delete_(void *p, SL_DEBUG_FILE_INFO_PARAM)
 {
     sl_free(p);
-    
-    return NULL;
 }
 
 SL_API void sl_memory_zero(void *p, sl_i sz)

@@ -11,8 +11,8 @@ SL_API void*  sl_memory_new_(sl_i sz, SL_DEBUG_FILE_INFO_PARAM);
 SL_API void*  sl_memory_renew_(void *p, sl_i sz, SL_DEBUG_FILE_INFO_PARAM);
 SL_API void   sl_memory_delete_(void *p, SL_DEBUG_FILE_INFO_PARAM);
 
-#define sl_memory_new(sz)      sl_memory_new_(sz, SL_DEBUG_FILE_INFO)
-#define sl_memory_renew(p, sz) sl_memory_renew_(p, sz, SL_DEBUG_FILE_INFO)
-#define sl_memory_delete(p)    sl_memory_delete_(p, SL_DEBUG_FILE_INFO)
+#define sl_memory_new(sz)      sl_memory_new_(sz, SL_DEBUG_FILE_INFO_ARGS)
+#define sl_memory_renew(p, sz) sl_memory_renew_(p, sz, SL_DEBUG_FILE_INFO_ARGS)
+#define sl_memory_delete(p)    sl_memory_delete_(p, SL_DEBUG_FILE_INFO_ARGS)
 
 #endif
