@@ -23,8 +23,8 @@ SL_API sl_b cu_string_equals_(sl_c *expected, sl_c *str, const char *file, const
     {
         nfail++;
 
-        log("[%3d ]Function: %s, in file: %s:%d.\n", nfail, func, file, line);
-        log("      Expected: '%s'. But: '%s'.\n", expected, str);
+        sl_log("[%3d ]Function: %s, in file: %s:%d.\n", nfail, func, file, line);
+        sl_log("      Expected: '%s'. But: '%s'.\n", expected, str);
     }
 
     return ret;

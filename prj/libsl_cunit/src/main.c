@@ -8,17 +8,21 @@ static void test_string(void)
 
     str = sl_string_new("1234567890123456");
     cu_string_equals("1234567890123456", str->c_str);
-    log("%s\n", str->c_str);
+    sl_log("%s", str->c_str);
     sl_object_delete(str);
 
     str = sl_string_new("ñ");
     cu_string_equals("ñ", str->c_str);
-    log("%s\n", str->c_str);
+    sl_log("%s", str->c_str);
     sl_object_delete(str);
 
     str = sl_string_new("龙之谷");
     cu_string_equals("龙之谷", str->c_str);
-    log("%s\n", str->c_str);
+    sl_log("%s", str->c_str);
+    sl_object_delete(str);
+
+    str = sl_string_format("hello %s", "world");
+    sl_log("%s", str->c_str);
     sl_object_delete(str);
 }
 

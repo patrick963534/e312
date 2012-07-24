@@ -1,4 +1,5 @@
 #include <sl/sl_string.h>
+#include <sl/sl_log.h>
 #include <sl/sl_memory.h>
 #include <sl/sl_libc_string.h>
 
@@ -59,6 +60,15 @@ static sl_b check_is_u8_string(const sl_c *str)
     return 1;
 }
 
+static void update_buffer(sl_string_t *me)
+{
+    if (me->pos + 1 >= me->sz)
+    {
+        me->sz += me->sz;
+        me->c_str = sl_memory_renew(me->c_str, me->sz);
+    }
+}
+
 SL_API sl_string_t* sl_string_new(const sl_c *str)
 {
     sl_string_t *me;
@@ -78,34 +88,55 @@ SL_API sl_string_t* sl_string_new(const sl_c *str)
 
 SL_API sl_string_t* sl_string_format(const sl_c *fmt, ...)
 {
-    return NULL;
+    sl_string_t *me;
+    const sl_c  *f;
+
+    me = sl_string_new(NULL);
+    f = fmt;
+
+    while (*f)
+    {
+        if (*f != '%')
+        {
+            me->c_str[me->pos++] = *f;
+            update_buffer(me);
+        }
+        else
+        {
+            switch (*(f + 1))
+            {
+                case 's':
+                    sl_log("%s", "get pattern string.");
+                    f++;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        f++;
+    }
+
+    me->c_str[me->pos] = '\0';
+
+    return me;
 }
 
 SL_API void sl_string_append(sl_string_t *me, const sl_c *str)
 {
-    sl_c *t;
-
     sl_assert(me);
     sl_assert(str);
     sl_assert(me->pos < me->sz);
     sl_assert(check_is_u8_string(str));
 
-    t = me->c_str + me->pos;
-
-    while (0 != (*t++ = *str++))
+    while (*str)
     {
-        me->pos++;
-
-        if (me->pos + 1 >= me->sz)
-        {
-            me->sz += me->sz;
-            me->c_str = sl_memory_renew(me->c_str, me->sz);
-
-            t = me->c_str + me->pos;
-        }
+        me->c_str[me->pos++] = *str;
+        update_buffer(me);
+        str++;
     }
 
-    *t = '\0';
+    me->c_str[me->pos] = '\0';
 
     sl_assert(me->pos < me->sz);
 }
