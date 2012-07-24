@@ -20,13 +20,16 @@ solution "unit_test"
         includedirs { 
                 "../../deps/libsl/include", 
                 "../../deps/libc/include", 
+                "../../deps/cunit/include", 
                 "usr/include" 
         }
         files { 
                 "../../deps/libc/src/**.h", 
-                "../../deps/libc/src/**.h", 
+                "../../deps/libc/src/**.c", 
+                "../../deps/libsl/src/**.h", 
                 "../../deps/libsl/src/**.c", 
-                "../../deps/libsl/src/**.c", 
+                "../../deps/cunit/src/**.h", 
+                "../../deps/cunit/src/**.c", 
                 "src/**.h", 
                 "src/**.c" 
         }

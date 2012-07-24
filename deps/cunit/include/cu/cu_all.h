@@ -3,8 +3,8 @@
 
 #include <sl/sl_defs.h>
 
-SL_API sl_b cu_string_equals_(sl_c *str1, sl_c *str2);
+SL_API sl_b cu_string_equals_(sl_c *expected, sl_c *str);
 
-#define cu_string_equals(str1, str2) do { if (!cu_string_equals_(str1, str2)) return; } while(0)
+#define cu_string_equals(expected, str) do { if (!cu_string_equals_(expected, str)) return; } while(0)
 
 #endif
