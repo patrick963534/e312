@@ -26,9 +26,11 @@ SL_API sl_string_t* sl_string_new(const sl_c *str);
 /**
  Format a string to create a sl_string_t instance.
  @fmt: Assert @fmt is an UTF-8 string.
- Assert the returning value sl_string_t.c_str is an UTF-8 string.
+ @sz:  The maximize size of buffer. 
+ @return: If the real result larger than sz, then return NULL.
+          Assert the returning value sl_string_t.c_str is an UTF-8 string.
 */
-SL_API sl_string_t* sl_string_format(const sl_c *fmt, ...);
+SL_API sl_string_t* sl_string_format(sl_i sz, const sl_c *fmt, ...);
 
 /**
  Append a @str string to the end of @me string.
@@ -49,6 +51,12 @@ SL_API sl_c*        sl_string_get_char(sl_string_t *me, sl_i n);
  @ch: Assert it's an UTF-8 string.
 */
 SL_API void         sl_string_set_char(sl_string_t *me, sl_i pos, sl_c *ch);
+
+/**
+ @return: Get count of characters in UTF-8 string @me.
+ @remark: Each character might be multi-bytes.
+*/
+SL_API sl_i         sl_string_char_count(sl_string_t *me);
 
 /**
  Check string @str1 and @str2 are the same. We advise @str1 and @str2 are 

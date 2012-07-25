@@ -2,6 +2,7 @@
 #include <sl/sl_log.h>
 #include <sl/sl_memory.h>
 #include <sl/sl_libc_string.h>
+#include <sl/sl_libc_stdarg.h>
 
 #define BUF_INIT_SZ 16
 
@@ -13,12 +14,12 @@
 */
 
 static const sl_i u8_prefix[6] = {
-    0x00, /* binary: 0. */ 
-    0x06, /* binary: 110. */
-    0x0E, /* binary: 1110. */
-    0x1E, /* binary: 11110. */ 
-    0x3E, /* binary: 111110. */ 
-    0x7E, /* binary: 1111110. */
+    0x00, /* binary: 0.         */
+    0x06, /* binary: 110.       */
+    0x0E, /* binary: 1110.      */
+    0x1E, /* binary: 11110.     */
+    0x3E, /* binary: 111110.    */
+    0x7E, /* binary: 1111110.   */
 };
 
 static const sl_c u8_trail_bytes[256] = {
@@ -32,9 +33,6 @@ static const sl_c u8_trail_bytes[256] = {
     2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, 3,3,3,3,3,3,3,3,4,4,4,4,5,5,5,5,
 };
 
-/**
- Will move to other file which process u8 stuff or charset stuff.
-*/
 static sl_b check_is_u8_string(const sl_c *str)
 {
     sl_uc *u8;
@@ -47,17 +45,22 @@ static sl_b check_is_u8_string(const sl_c *str)
     {
         nb = u8_trail_bytes[*u8];
 
-        if ((*u8) >> (8 - nb - 2) != u8_prefix[nb])
-            return 0;
+        /* only verify for non-ascii character. */
+        if (nb != 0 && (*u8) >> (8 - (nb + 2)) != u8_prefix[nb])
+            goto fail;
 
         u8++;
 
         for (i = 1; i < nb + 1; i++, u8++)
             if (*u8 == 0 || ((*u8) >> 6) != 0x02)
-                return 0;
+                goto fail;
     }
 
     return 1;
+
+fail:
+    sl_log("String '%' is not a UTF-8 encoded string.", str);
+    return 0;
 }
 
 static void update_buffer(sl_string_t *me)
@@ -86,38 +89,28 @@ SL_API sl_string_t* sl_string_new(const sl_c *str)
     return me;
 }
 
-SL_API sl_string_t* sl_string_format(const sl_c *fmt, ...)
+SL_API sl_string_t* sl_string_format(int sz, const sl_c *fmt, ...)
 {
     sl_string_t *me;
-    const sl_c  *f;
+    sl_c        *buf;
+    sl_va_list   va;
+    sl_i         n;
 
-    me = sl_string_new(NULL);
-    f = fmt;
+    sl_assert(sz > 0);
 
-    while (*f)
-    {
-        if (*f != '%')
-        {
-            me->c_str[me->pos++] = *f;
-            update_buffer(me);
-        }
-        else
-        {
-            switch (*(f + 1))
-            {
-                case 's':
-                    sl_log("%s", "get pattern string.");
-                    f++;
-                    break;
-                default:
-                    break;
-            }
-        }
+    /* the reason of +1 is used to include the '\0' */
+    buf = sl_memory_new(sz + 1);
 
-        f++;
-    }
+    sl_va_start(va, fmt);
+    n = sl_vsnprintf(buf, sz + 1, fmt, va);
+    sl_va_end(va);
 
-    me->c_str[me->pos] = '\0';
+    if (n < sz)
+        me = sl_string_new(buf);
+    else
+        me = NULL;
+
+    sl_memory_delete(buf);
 
     return me;
 }
@@ -155,6 +148,27 @@ SL_API void sl_string_set_char(sl_string_t *me, sl_i pos, sl_c *ch)
     /**
      TODO: @ch is an UTF-8 string, we pick the first multi-bytes character to do replacing.
     */
+}
+
+SL_API sl_i sl_string_char_count(sl_string_t *me)
+{
+    sl_i   n;
+    sl_uc *s;
+    sl_uc *e;
+
+    n = 0;
+    s = (sl_uc*)me->c_str;
+    e = (sl_uc*)(me->c_str + me->sz);
+
+    while (*s)
+    {
+        n++;
+        s = s + (u8_trail_bytes[*s] + 1);
+
+        sl_assert(s < e);
+    }
+
+    return n;
 }
 
 SL_API sl_b sl_string_equals(const sl_c *str1, const sl_c *str2)

@@ -23,10 +23,39 @@ SL_API sl_b cu_string_equals_(sl_c *expected, sl_c *str, const char *file, const
     {
         nfail++;
 
-        sl_log("[%3d ]Function: %s, in file: %s:%d.\n", nfail, func, file, line);
-        sl_log("      Expected: '%s'. But: '%s'.\n", expected, str);
+        sl_log("[%3d ]Function: %s, in file: %s:%d.", nfail, func, file, line);
+        sl_log("      Expected: '%s'. But: '%s'.", expected, str);
     }
 
     return ret;
 }
 
+SL_API sl_b cu_int_equals_(sl_i expected, sl_i v, const char *file, const char *func, int line)
+{
+    if (expected != v)
+    {
+        nfail++;
+
+        sl_log("[%3d ]Function: %s, in file: %s:%d.", nfail, func, file, line);
+        sl_log("      Expected: '%d'. But: '%d'.", expected, v);
+
+        return 0;
+    }
+
+    return 1;
+}
+
+SL_API sl_b cu_pointer_equals_(void *expected, void *v, const char *file, const char *func, int line)
+{
+    if (expected != v)
+    {
+        nfail++;
+
+        sl_log("[%3d ]Function: %s, in file: %s:%d.", nfail, func, file, line);
+        sl_log("      Expected: '0x%x'. But: '0x%x'.", expected, v);
+
+        return 0;
+    }
+
+    return 1;
+}
