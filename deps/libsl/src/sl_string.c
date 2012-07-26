@@ -191,5 +191,7 @@ SL_API sl_b sl_string_equals(const sl_string_t *str1, const sl_string_t *str2)
 SL_API void sl_string_destruct(sl_string_t *me)
 {
     sl_memory_delete(me->c_str);
+
+    sl_object_destruct(me);
 }
 
