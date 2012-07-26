@@ -93,7 +93,7 @@ SL_API sl_string_t* sl_string_format(int sz, const sl_c *fmt, ...)
 {
     sl_string_t *me;
     sl_c        *buf;
-    sl_va_list   va;
+    slc_va_list   va;
     sl_i         n;
 
     sl_assert(sz > 0);
@@ -101,9 +101,9 @@ SL_API sl_string_t* sl_string_format(int sz, const sl_c *fmt, ...)
     /* the reason of +1 is used to include the '\0' */
     buf = sl_memory_new(sz + 1);
 
-    sl_va_start(va, fmt);
-    n = sl_vsnprintf(buf, sz + 1, fmt, va);
-    sl_va_end(va);
+    slc_va_start(va, fmt);
+    n = slc_vsnprintf(buf, sz + 1, fmt, va);
+    slc_va_end(va);
 
     if (n < sz)
         me = sl_string_new(buf);
@@ -171,10 +171,10 @@ SL_API sl_i sl_string_char_count(sl_string_t *me)
     return n;
 }
 
-SL_API sl_b sl_string_equals(const sl_c *str1, const sl_c *str2)
+SL_API sl_b sl_string_equals(const sl_string_t *str1, const sl_string_t *str2)
 {
-    const sl_c *s = str1;
-    const sl_c *d = str2;
+    const sl_c *s = str1->c_str;
+    const sl_c *d = str2->c_str;
 
     assert(s != 0 && d != 0);
     

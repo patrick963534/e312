@@ -62,7 +62,7 @@ SL_API sl_i         sl_string_char_count(sl_string_t *me);
  Check string @str1 and @str2 are the same. We advise @str1 and @str2 are 
  both UTF-8 string.
 */
-SL_API sl_b         sl_string_equals(const sl_c *str1, const sl_c *str2);
+SL_API sl_b         sl_string_equals(const sl_string_t *s1, const sl_string_t *s2);
 
 /**
  Destructor of sl_string_t, it will be invoked automaticlly  

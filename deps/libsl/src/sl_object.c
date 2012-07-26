@@ -55,5 +55,5 @@ SL_API void sl_object_delete(void *me_)
 
     me->valid_check_id = 0;
 
-    sl_free(me);
+    sl_memory_delete(me);
 }
