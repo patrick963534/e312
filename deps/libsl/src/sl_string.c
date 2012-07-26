@@ -78,10 +78,11 @@ SL_API sl_string_t* sl_string_new(const sl_c *str)
 
     me = (sl_string_t*)sl_object_new(sizeof(*me));
 
+    me->tname    = "string";
     me->destruct = (sl_destruct_func)sl_string_destruct;
     me->sz       = BUF_INIT_SZ;
-    me->pos      = 0;
     me->c_str    = sl_memory_new(me->sz);
+    me->pos      = 0;
 
     if (str)
         sl_string_append(me, str);
@@ -93,7 +94,7 @@ SL_API sl_string_t* sl_string_format(int sz, const sl_c *fmt, ...)
 {
     sl_string_t *me;
     sl_c        *buf;
-    slc_va_list   va;
+    slc_va_list  va;
     sl_i         n;
 
     sl_assert(sz > 0);

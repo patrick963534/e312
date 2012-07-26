@@ -5,10 +5,21 @@
 
 typedef void (*sl_destruct_func)(void *me_);
 
-#define sl_extends_object() \
-    sl_i    serial_check_id; /* use to check it's inheirate from sl_object_t. */ \
-    sl_i    valid_check_id;  /* check whether object is released. */ \
-    sl_i    heap_check_id;   /* check is heap or stack. */ \
+/**
+ @serial_check_id: 
+    use to check it's inheirate from sl_object_t.
+ @valid_check_id: 
+    check whether object is released.
+ @heap_check_id: 
+    check is heap or stack.
+ @tname:
+    concrete type name. Only used for debugging, not type checking.
+*/
+#define sl_extends_object()  \
+    sl_i    serial_check_id; \
+    sl_i    valid_check_id;  \
+    sl_i    heap_check_id;   \
+    sl_c   *tname;           \
     sl_destruct_func destruct
 
 /**

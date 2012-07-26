@@ -19,6 +19,7 @@ SL_API sl_object_t* sl_object_new(sl_i sz)
     
     me = (sl_object_t*)sl_memory_new(sz);
 
+    me->tname           = "object";
     me->serial_check_id = SL_SERIAL_CHECK_ID;
     me->valid_check_id  = SL_VALID_CHECK_ID;
     me->heap_check_id   = SL_HEAP_CHECK_ID;
