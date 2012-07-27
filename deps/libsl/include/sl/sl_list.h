@@ -28,7 +28,7 @@ SL_API void*            sl_list_begin(sl_list_t *me);
 SL_API void*            sl_list_next(sl_list_t *me);
 SL_API sl_b             sl_list_end(sl_list_t *me);
 
-#define sl_list_for_each(Pos, Me) \
-    for (Pos = sl_list_begin(Me); sl_list_end(Me); Pos = sl_list_next(Me))
+#define sl_list_for_each(Pos, Me, Type) \
+    for (Pos = (Type*)sl_list_begin(Me); !sl_list_end(Me); Pos = (Type*)sl_list_next(Me))
 
 #endif

@@ -41,6 +41,7 @@ SL_API void sl_list_add(sl_list_t *me, void *v)
     sl_list_node_s *n;
 
     n = sl_memory_new(sizeof(*n));
+    n->data = v;
 
     next->prev = n;
     n->next    = next;
@@ -56,7 +57,15 @@ SL_API void sl_list_add(sl_list_t *me, void *v)
 
 SL_API void sl_list_clear(sl_list_t *me)
 {
-    
+    sl_list_node_s *next = me->head->next;
+    sl_list_node_s *temp;
+
+    while (next != me->head)
+    {
+        temp = next;
+        next = next->next;
+        sl_memory_delete(temp);
+    }
 }
 
 //SL_API void* sl_list_get_first(sl_list_t *me);
