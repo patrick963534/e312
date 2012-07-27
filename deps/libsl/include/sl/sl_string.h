@@ -40,17 +40,18 @@ SL_API sl_string_t* sl_string_format(sl_i sz, const sl_c *fmt, ...);
 SL_API void         sl_string_append(sl_string_t *me, const sl_c *str);
 
 /**
+ Get a small string to indicate a UTF-8 multi-bytes character.
  Get the @n mutli-byte character in @me string.
  @n: The nth multi-byte character.
  @return: It's a UTF-8 string, with a multi-byte character.
 */
-SL_API sl_c*        sl_string_get_char(sl_string_t *me, sl_i n);
+SL_API const sl_c*  sl_string_get_char(sl_string_t *me, sl_i n);
 
 /**
  Update the nth multi-bytes character to @ch in @me string.
  @ch: Assert it's an UTF-8 string.
 */
-SL_API void         sl_string_set_char(sl_string_t *me, sl_i pos, sl_c *ch);
+SL_API void         sl_string_set_char(sl_string_t *me, sl_i pos, const sl_c *ch);
 
 /**
  @return: Get count of characters in UTF-8 string @me.

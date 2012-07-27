@@ -135,7 +135,7 @@ SL_API void sl_string_append(sl_string_t *me, const sl_c *str)
     sl_assert(me->pos < me->sz);
 }
 
-SL_API sl_c* sl_string_get_char(sl_string_t *me, sl_i n)
+SL_API const sl_c* sl_string_get_char(sl_string_t *me, sl_i n)
 {
     /**
      TODO: get a small string to identify a UTF-8 multi-bytes character.
@@ -144,7 +144,7 @@ SL_API sl_c* sl_string_get_char(sl_string_t *me, sl_i n)
     return NULL;
 }
 
-SL_API void sl_string_set_char(sl_string_t *me, sl_i pos, sl_c *ch)
+SL_API void sl_string_set_char(sl_string_t *me, sl_i pos, const sl_c *ch)
 {
     /**
      TODO: @ch is an UTF-8 string, we pick the first multi-bytes character to do replacing.
