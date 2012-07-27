@@ -35,6 +35,11 @@ static void test_string(void)
     str = sl_string_format(11, "hello %s", "world");
     cu_pointer_equals(NULL, str);
     sl_object_delete(str);
+
+    str = sl_string_new("good morning.");
+    sl_string_append(str, "guys");
+    cu_string_equals("good morning.guys", str->c_str);
+    sl_object_delete(str);
 }
 
 static void test_list()
