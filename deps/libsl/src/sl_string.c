@@ -72,6 +72,24 @@ static void update_buffer(sl_string_t *me)
     }
 }
 
+SL_API const sl_char_t sl_char_from(const sl_c *s)
+{
+    sl_char_t ch;
+    sl_i nb, i;
+
+    nb = u8_trail_bytes[(sl_uc)*s] + 1;
+
+    for (i = 0; i < SL_CHAR_SZ; i++)
+    {
+        if (i < nb)
+            ch.buf[i] = s[i];
+        else
+            ch.buf[i] = 0;
+    }
+
+    return ch;
+}
+
 SL_API sl_string_t* sl_string_new(const sl_c *str)
 {
     sl_string_t *me;
@@ -135,16 +153,32 @@ SL_API void sl_string_append(sl_string_t *me, const sl_c *str)
     sl_assert(me->pos < me->sz);
 }
 
-SL_API const sl_c* sl_string_get_char(sl_string_t *me, sl_i n)
+SL_API const sl_char_t sl_string_get_char(sl_string_t *me, sl_i n)
 {
-    /**
-     TODO: get a small string to identify a UTF-8 multi-bytes character.
-    */
+    sl_uc       *s;
+    sl_uc       *e;
+    sl_char_t    ch;
+    int          c;
 
-    return NULL;
+    s = (sl_uc*)me->c_str;
+    e = (sl_uc*)(me->c_str + me->sz);
+    c = 0;
+
+    while (*s)
+    {
+        if (c == n)
+            return sl_char_from((sl_c*)s);
+
+        c++;
+        s = s + (u8_trail_bytes[*s] + 1);
+
+        sl_assert(s < e);
+    }
+
+    return ch;
 }
 
-SL_API void sl_string_set_char(sl_string_t *me, sl_i pos, const sl_c *ch)
+SL_API void sl_string_set_char(sl_string_t *me, sl_i pos, const sl_char_t ch)
 {
     /**
      TODO: @ch is an UTF-8 string, we pick the first multi-bytes character to do replacing.

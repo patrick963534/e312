@@ -5,9 +5,31 @@
 #include <sl/sl_log.h>
 #include <cu/cu_all.h>
 
+static void test_char(void)
+{
+    sl_string_t     *str;
+    sl_char_t  ch;
+
+    str = sl_string_new("1234567890123456");
+    ch  = sl_char_from(str->c_str);
+    cu_string_equals("1", ch.buf);
+    sl_object_delete(str);
+
+    str = sl_string_new("ñ");
+    ch  = sl_char_from(str->c_str);
+    cu_string_equals("ñ", ch.buf);
+    sl_object_delete(str);
+
+    str = sl_string_new("龙之谷");
+    ch  = sl_char_from(str->c_str);
+    cu_string_equals("龙", ch.buf);
+    sl_object_delete(str);
+}
+
 static void test_string(void)
 {
     sl_string_t *str;
+    sl_char_t    ch;
 
     str = sl_string_new("1234567890123456");
     cu_string_equals("1234567890123456", str->c_str);
@@ -40,6 +62,17 @@ static void test_string(void)
     sl_string_append(str, "guys");
     cu_string_equals("good morning.guys", str->c_str);
     sl_object_delete(str);
+
+    str = sl_string_new("good morning.");
+    ch  = sl_string_get_char(str, 5);
+    cu_string_equals("m", ch.buf);
+    sl_object_delete(str);
+
+    str = sl_string_new("龙之谷");
+    ch  = sl_string_get_char(str, 1);
+    cu_string_equals("之", ch.buf);
+    sl_object_delete(str);
+
 }
 
 static void test_list()
@@ -94,6 +127,7 @@ int a = 1 << 2;
 int main()
 {
     test_string();
+    test_char();
     test_list();
 
     sl_memory_leak_report();

@@ -4,6 +4,21 @@
 #include <sl/sl_defs.h>
 #include <sl/sl_object.h>
 
+#define SL_CHAR_SZ  7
+
+typedef struct sl_char_t
+{
+    sl_c    buf[SL_CHAR_SZ];
+} sl_char_t;
+
+/**
+ Description:
+    Get the 1st UTF-8 multi-bytes character from @s.
+ Remark:
+    Try NOT to modify sl_char_t object.
+*/
+SL_API const sl_char_t sl_char_from(const sl_c *s);
+
 /**
  Both sl_c* and sl_string_t are used to identify a UTF-8.
  Only sl_string_t can used to do modification.
@@ -45,13 +60,13 @@ SL_API void         sl_string_append(sl_string_t *me, const sl_c *str);
  @n: The nth multi-byte character.
  @return: It's a UTF-8 string, with a multi-byte character.
 */
-SL_API const sl_c*  sl_string_get_char(sl_string_t *me, sl_i n);
+SL_API const sl_char_t  sl_string_get_char(sl_string_t *me, sl_i n);
 
 /**
  Update the nth multi-bytes character to @ch in @me string.
  @ch: Assert it's an UTF-8 string.
 */
-SL_API void         sl_string_set_char(sl_string_t *me, sl_i pos, const sl_c *ch);
+SL_API void         sl_string_set_char(sl_string_t *me, sl_i pos, const sl_char_t ch);
 
 /**
  @return: Get count of characters in UTF-8 string @me.
