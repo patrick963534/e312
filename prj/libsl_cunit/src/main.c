@@ -45,6 +45,7 @@ static void test_list()
     int       *p;
     int        i;
     
+    /* test loop through */
     {
         list = sl_list_new("int");
         for (i = 0; i < sl_count(a); i++)
@@ -62,6 +63,7 @@ static void test_list()
         sl_object_delete(list);
     }
 
+    /* test get item by id and remove. */
     {
         list = sl_list_new("int");
         for (i = 0; i < sl_count(a); i++)
