@@ -72,7 +72,7 @@ static void update_buffer(sl_string_t *me)
     }
 }
 
-SL_API const sl_char_t sl_char_from(const sl_c *s)
+SL_API sl_char_t sl_char_from(const sl_c *s)
 {
     sl_char_t ch;
     sl_i nb, i;
@@ -153,7 +153,7 @@ SL_API void sl_string_append(sl_string_t *me, const sl_c *str)
     sl_assert(me->pos < me->sz);
 }
 
-SL_API const sl_char_t sl_string_get_char(sl_string_t *me, sl_i n)
+SL_API sl_char_t sl_string_get_char(sl_string_t *me, sl_i n)
 {
     sl_uc       *s;
     sl_uc       *e;
@@ -180,34 +180,34 @@ SL_API const sl_char_t sl_string_get_char(sl_string_t *me, sl_i n)
 
 SL_API void sl_string_set_char(sl_string_t *me, sl_i pos, const sl_char_t ch)
 {
-    sl_uc  *s;
-    sl_uc  *e;
-    sl_i    c;
-
-    s = (sl_uc*)me->c_str;
-    e = (sl_uc*)(me->c_str + me->sz);
-    c = 0;
-
-    while (*s)
-    {
-        if (c == n)
-            break;
-
-        nb1 = (u8_trail_bytes[*s] + 1);
-
-        c++;
-        s = s + nb1;
-
-        sl_assert(s < e);
-    }
-
-    if (u8_trail_bytes[*s] == u8_trail_bytes[(sl_uc*)ch.buf])
-    {
-    }
-    else
-    {
-
-    }
+//    sl_uc  *s;
+//    sl_uc  *e;
+//    sl_i    c;
+//
+//    s = (sl_uc*)me->c_str;
+//    e = (sl_uc*)(me->c_str + me->sz);
+//    c = 0;
+//
+//    while (*s)
+//    {
+//        if (c == n)
+//            break;
+//
+//        nb1 = (u8_trail_bytes[*s] + 1);
+//
+//        c++;
+//        s = s + nb1;
+//
+//        sl_assert(s < e);
+//    }
+//
+//    if (u8_trail_bytes[*s] == u8_trail_bytes[(sl_uc*)ch.buf])
+//    {
+//    }
+//    else
+//    {
+//
+//    }
 }
 
 SL_API sl_i sl_string_char_count(sl_string_t *me)

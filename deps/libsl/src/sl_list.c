@@ -1,12 +1,12 @@
 #include <sl/sl_list.h>
 #include <sl/sl_memory.h>
 
-typedef struct sl_list_node_s
+struct sl_list_node_s
 {
     struct sl_list_node_s *prev;
     struct sl_list_node_s *next;
     void          *data;
-} sl_list_node_s;
+};
 
 SL_API sl_list_t* sl_list_new(const char *tag)
 {

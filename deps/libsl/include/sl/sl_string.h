@@ -17,7 +17,7 @@ typedef struct sl_char_t
  Remark:
     Try NOT to modify sl_char_t object.
 */
-SL_API const sl_char_t sl_char_from(const sl_c *s);
+SL_API sl_char_t    sl_char_from(const sl_c *s);
 
 /**
  Description:
@@ -65,7 +65,7 @@ SL_API void         sl_string_append(sl_string_t *me, const sl_c *str);
  @n: The nth multi-byte character.
  @return: It's a UTF-8 string, with a multi-byte character.
 */
-SL_API const sl_char_t  sl_string_get_char(sl_string_t *me, sl_i n);
+SL_API sl_char_t    sl_string_get_char(sl_string_t *me, sl_i n);
 
 /**
  Update the nth multi-bytes character to @ch in @me string.
