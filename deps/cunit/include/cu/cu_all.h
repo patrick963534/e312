@@ -5,7 +5,7 @@
 
 #define CU_DEBUG_INFO const sl_c *file, const sl_c *func, sl_i line
 
-SL_API sl_b cu_string_equals_ (sl_c *exp, sl_c *str, CU_DEBUG_INFO);
+SL_API sl_b cu_string_equals_ (const sl_c *exp, const sl_c *str, CU_DEBUG_INFO);
 SL_API sl_b cu_int_equals_    (sl_i exp, sl_i v, CU_DEBUG_INFO);
 SL_API sl_b cu_pointer_equals_(void *exp, void *v, CU_DEBUG_INFO);
 

@@ -4,10 +4,10 @@
 
 static sl_i nfail = 0;
 
-SL_API sl_b cu_string_equals_(sl_c *expected, sl_c *str, const char *file, const char *func, int line)
+SL_API sl_b cu_string_equals_(const sl_c *expected, const sl_c *str, const char *file, const char *func, int line)
 {
-    char *s1 = expected;
-    char *s2 = str;
+    const char *s1 = expected;
+    const char *s2 = str;
     sl_b ret = 1;
 
     while (*s1 || *s2)
