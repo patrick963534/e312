@@ -51,25 +51,90 @@ SL_API void sl_list_add(sl_list_t *me, void *v)
     me->count++;
 }
 
-//SL_API int sl_list_index(sl_list_t *me, void *v);
-//SL_API void sl_list_remove(sl_list_t *me, void *v);
-//SL_API void* sl_list_at(sl_list_t *me, int index);
-
-SL_API void sl_list_clear(sl_list_t *me)
+SL_API int sl_list_index(sl_list_t *me, void *v)
 {
-    sl_list_node_s *next = me->head->next;
-    sl_list_node_s *temp;
+    sl_list_node_s *cur;
+    int i;
 
-    while (next != me->head)
+    i = 0;
+    cur = me->head->next;
+
+    while (cur != me->head)
     {
-        temp = next;
-        next = next->next;
-        sl_memory_delete(temp);
+        if (cur->data == v)
+            break;
+
+        i++;
+        cur = cur->next;
+    }
+
+    return i;
+}
+
+SL_API void sl_list_remove(sl_list_t *me, void *v)
+{
+    sl_list_node_s *cur, *prev;
+
+    prev = me->head;
+    cur  = me->head->next;
+
+    while (cur != me->head)
+    {
+        if (cur->data == v)
+        {
+            prev->next = cur->next;
+            cur->next->prev = prev;
+
+            sl_memory_delete(cur);
+
+            break;
+        }
+
+        prev = cur;
+        cur  = cur->next;
     }
 }
 
-//SL_API void* sl_list_get_first(sl_list_t *me);
-//SL_API void* sl_list_get_last(sl_list_t *me);
+SL_API void* sl_list_at(sl_list_t *me, int index)
+{
+    sl_list_node_s *cur;
+    int i; 
+
+    if (index > me->count)
+        return NULL;
+
+    i = 0;
+    cur = me->head->next;
+
+    while (cur != me->head)
+    {
+        if (i == index)
+            return cur->data;
+
+        cur  = cur->next;
+    }
+
+    return NULL;
+}
+
+SL_API sl_i sl_list_count(sl_list_t *me)
+{
+    return me->count;
+}
+
+SL_API void sl_list_clear(sl_list_t *me)
+{
+    sl_list_node_s *cur, *temp;
+
+    cur = me->head->next;
+
+    while (cur != me->head)
+    {
+        temp = cur;
+        cur  = cur->next;
+        sl_memory_delete(temp);
+    }
+}
 
 SL_API void* sl_list_begin(sl_list_t *me)
 {
