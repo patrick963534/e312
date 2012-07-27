@@ -3,6 +3,13 @@
 
 #include <sl/sl_defs.h>
 
+/**
+ The memory lib provide memory leak detection. It just let you know
+ whether there's memory leak, and provide little information, you should
+ NOT expect it provide very good information. You SHOULD have a habit
+ to detect memory leak everytime when you add new codes.
+*/
+
 #define SL_DEBUG_FILE_INFO_ARGS   __FILE__, __FUNCTION__, __LINE__
 #define SL_DEBUG_FILE_INFO_PARAM  const sl_c *file, const sl_c *func, sl_i line
 
