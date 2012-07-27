@@ -6,8 +6,6 @@
 
 SL_API void sl_log_(const sl_c *type, const sl_c *fmt, ...);
 
-#define sl_log(fmt, arg...)     sl_log_("[INFO]", fmt, arg)
-
-//#define sl_log(fmt, arg...) do { sl_printf(fmt, arg); sl_fflush(stdout); } while(0)
+#define sl_log(fmt, arg...)     sl_log_("INFO", fmt, arg)
 
 #endif
