@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <sl/sl_string.h>
+#include <sl/sl_memory.h>
 #include <sl/sl_list.h>
 #include <sl/sl_log.h>
 #include <cu/cu_all.h>
@@ -66,6 +67,8 @@ int main()
 {
     test_string();
     test_list();
+
+    sl_memory_leak_report();
 
     return 1;
 }

@@ -6,6 +6,7 @@
 #define SL_DEBUG_FILE_INFO_ARGS   __FILE__, __FUNCTION__, __LINE__
 #define SL_DEBUG_FILE_INFO_PARAM  const sl_c *file, const sl_c *func, sl_i line
 
+SL_API void   sl_memory_leak_report();
 SL_API void   sl_memory_zero(void *p, sl_i sz);
 SL_API void*  sl_memory_new_(sl_i sz, SL_DEBUG_FILE_INFO_PARAM);
 SL_API void*  sl_memory_renew_(void *p, sl_i sz, SL_DEBUG_FILE_INFO_PARAM);
