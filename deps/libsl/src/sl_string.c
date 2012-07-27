@@ -158,7 +158,7 @@ SL_API const sl_char_t sl_string_get_char(sl_string_t *me, sl_i n)
     sl_uc       *s;
     sl_uc       *e;
     sl_char_t    ch;
-    int          c;
+    sl_i         c;
 
     s = (sl_uc*)me->c_str;
     e = (sl_uc*)(me->c_str + me->sz);
@@ -180,9 +180,34 @@ SL_API const sl_char_t sl_string_get_char(sl_string_t *me, sl_i n)
 
 SL_API void sl_string_set_char(sl_string_t *me, sl_i pos, const sl_char_t ch)
 {
-    /**
-     TODO: @ch is an UTF-8 string, we pick the first multi-bytes character to do replacing.
-    */
+    sl_uc  *s;
+    sl_uc  *e;
+    sl_i    c;
+
+    s = (sl_uc*)me->c_str;
+    e = (sl_uc*)(me->c_str + me->sz);
+    c = 0;
+
+    while (*s)
+    {
+        if (c == n)
+            break;
+
+        nb1 = (u8_trail_bytes[*s] + 1);
+
+        c++;
+        s = s + nb1;
+
+        sl_assert(s < e);
+    }
+
+    if (u8_trail_bytes[*s] == u8_trail_bytes[(sl_uc*)ch.buf])
+    {
+    }
+    else
+    {
+
+    }
 }
 
 SL_API sl_i sl_string_char_count(sl_string_t *me)
