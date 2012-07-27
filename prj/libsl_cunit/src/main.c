@@ -45,20 +45,41 @@ static void test_list()
     int       *p;
     int        i;
     
-    list = sl_list_new("int");
-    for (i = 0; i < sl_count(a); i++)
     {
-        sl_list_add(list, &a[i]);
+        list = sl_list_new("int");
+        for (i = 0; i < sl_count(a); i++)
+        {
+            sl_list_add(list, &a[i]);
+        }
+
+        i = 0;
+        sl_list_for_each(p, list, int)
+        {
+            cu_int_equals(a[i++], *p);
+        }
+        cu_int_equals(10, i);
+
+        sl_object_delete(list);
     }
 
-    i = 0;
-    sl_list_for_each(p, list, int)
     {
-        cu_int_equals(a[i++], *p);
-    }
-    cu_int_equals(10, i);
+        list = sl_list_new("int");
+        for (i = 0; i < sl_count(a); i++)
+        {
+            sl_list_add(list, &a[i]);
+        }
 
-    sl_object_delete(list);
+        cu_int_equals(a[5], *((int*)sl_list_at(list, 5)));
+
+        sl_list_remove(list, sl_list_at(list, 5));
+
+        sl_list_for_each(p, list, int)
+        {
+            cu_assert(*p != a[5]);
+        }
+
+        sl_object_delete(list);
+    }
 }
 
 int a = 1 << 2;

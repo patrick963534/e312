@@ -111,7 +111,8 @@ SL_API void* sl_list_at(sl_list_t *me, int index)
         if (i == index)
             return cur->data;
 
-        cur  = cur->next;
+        i++;
+        cur = cur->next;
     }
 
     return NULL;
