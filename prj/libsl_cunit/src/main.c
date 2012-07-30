@@ -73,6 +73,11 @@ static void test_string(void)
     cu_string_equals("之", ch.buf);
     sl_object_delete(str);
 
+    str = sl_string_new("龙之谷");
+    sl_string_set_char(str, 2, sl_char_from("渊"));
+    sl_string_set_char(str, 1, sl_char_from("蛇"));
+    cu_string_equals("龙蛇渊", str->c_str);
+    sl_object_delete(str);
 }
 
 static void test_list()

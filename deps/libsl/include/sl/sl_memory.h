@@ -15,6 +15,7 @@
 
 SL_API void   sl_memory_leak_report();
 SL_API void   sl_memory_zero(void *p, sl_i sz);
+SL_API void   sl_memory_copy(void *dst, sl_i dst_sz, void *src, sl_i src_sz);
 SL_API void*  sl_memory_new_(sl_i sz, SL_DEBUG_FILE_INFO_PARAM);
 SL_API void*  sl_memory_renew_(void *p, sl_i sz, SL_DEBUG_FILE_INFO_PARAM);
 SL_API void   sl_memory_delete_(void *p, SL_DEBUG_FILE_INFO_PARAM);

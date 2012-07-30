@@ -98,6 +98,19 @@ SL_API void sl_memory_zero(void *p, sl_i sz)
         *b++ = 0;
 }
 
+SL_API void sl_memory_copy(void *dst, sl_i dst_sz, void *src, sl_i src_sz)
+{
+    sl_c *s, *d, *se, *de;
+
+    s  = (sl_c*)src;
+    d  = (sl_c*)dst;
+    se = s + src_sz;
+    de = d + dst_sz;
+
+    while (s < se && d < de)
+        *d++ = *s++;
+}
+
 SL_API void sl_memory_leak_report()
 {
     node_s *next;

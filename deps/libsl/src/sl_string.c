@@ -182,37 +182,43 @@ SL_API sl_char_t sl_string_get_char(sl_string_t *me, sl_i n)
 SL_API void sl_string_set_char(sl_string_t *me, sl_i n, const sl_char_t ch)
 {
     sl_uc  *s;
-    sl_uc  *e;
+    sl_uc  *sp;
     sl_i    c, nb, i;
 
-    s = (sl_uc*)me->c_str;
-    e = (sl_uc*)(me->c_str + me->sz);
+    s  = sl_memory_new(me->sz);
+    sp = s;
+    sl_memory_copy(s, me->sz, me->c_str, me->sz);
+
+    sl_memory_zero(me->c_str, me->sz);
+    me->pos = 0;
     c = 0;
 
-    while (*s)
+    while (*sp)
     {
-        nb = (u8_trail_bytes[*s] + 1);
+        nb = (u8_trail_bytes[*sp] + 1);
 
         if (c == n)
-            break;
+        {
+            sl_string_append(me, ch.buf);
+        }
+        else
+        {
+            for (i = 0; i < nb; i++)
+            {
+                me->c_str[me->pos++] = sp[i];
+                update_buffer(me);
+            }
+        }
 
         c++;
-        s = s + nb;
+        sp = sp + nb;
 
-        sl_assert(s < e);
+        sl_assert(sp < s + me->sz);
     }
 
-    if (u8_trail_bytes[*s] == u8_trail_bytes[(sl_uc)ch.buf[0]])
-    {
-        for (i = 0; i < nb; i++)
-        {
-            s[i] = (sl_uc)ch.buf[i];
-        }
-    }
-    else
-    {
+    sl_memory_delete(s);
 
-    }
+    sl_assert(n < c);
 }
 
 SL_API sl_i sl_string_char_count(sl_string_t *me)
