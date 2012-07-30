@@ -91,6 +91,17 @@ SL_API sl_char_t sl_char_from(const sl_c *s)
     return ch;
 }
 
+SL_API sl_b sl_char_equals(sl_char_t ch1, sl_char_t ch2)
+{
+    sl_i      i;
+
+    for (i = 0; i < SL_CHAR_SZ; i++)
+        if (ch1.buf[i] != ch2.buf[i])
+            return 0;
+
+    return 1;
+}
+
 SL_API sl_string_t* sl_string_new(const sl_c *str)
 {
     sl_string_t *me;
@@ -217,7 +228,6 @@ SL_API void sl_string_set_char(sl_string_t *me, sl_i n, const sl_char_t ch)
     }
 
     sl_memory_delete(s);
-
     sl_assert(n < c);
 }
 
@@ -244,10 +254,13 @@ SL_API sl_i sl_string_char_count(sl_string_t *me)
 
 SL_API sl_b sl_string_equals(const sl_string_t *str1, const sl_string_t *str2)
 {
-    const sl_c *s = str1->c_str;
-    const sl_c *d = str2->c_str;
+    const sl_c *s;
+    const sl_c *d;
 
-    assert(s != 0 && d != 0);
+    assert(str1 != 0 && str2 != 0);
+
+    s = str1->c_str;
+    d = str2->c_str;
     
     while (*s && *d)
     {
@@ -256,6 +269,90 @@ SL_API sl_b sl_string_equals(const sl_string_t *str1, const sl_string_t *str2)
     }
 
     return 1;
+}
+
+static void to_char_array(sl_string_t *me, sl_char_t **arr, sl_i *count)
+{
+    sl_char_t *chs;
+    sl_i       c, i;
+    sl_uc     *s;
+
+    c = sl_string_char_count(me);
+    chs = sl_memory_new(sizeof(chs[0]) * c);
+
+    s = (sl_uc*)me->c_str;
+    for (i = 0; i < c; i++)
+    {
+        chs[i] = sl_char_from((sl_c*)s);
+        s = s + (u8_trail_bytes[*s] + 1);
+    }
+
+    *arr = chs;
+    *count = c;
+}
+
+static sl_b sl_string_include(sl_string_t *me, sl_char_t ch)
+{
+    sl_uc *s;
+
+    s = (sl_uc*)me->c_str;
+    while (*s)
+    {
+        if (sl_char_equals(sl_char_from((sl_c*)s), ch))
+            return 1;
+
+        s = s + (u8_trail_bytes[*s] + 1);
+    }
+
+    return 0;
+}
+
+SL_API void sl_string_trim_string(sl_string_t *me, sl_string_t *trim)
+{
+    sl_char_t *chs;
+    sl_i       c, i, is, ie;
+
+    to_char_array(me, &chs, &c);
+
+    sl_memory_zero(me->c_str, me->sz);
+    me->pos = 0;
+
+    for (is = 0; is < c; is++)
+        if (!sl_string_include(trim, chs[is]))
+            break;
+
+    for (ie = c - 1; ie >= 0; ie--)
+        if (!sl_string_include(trim, chs[ie]))
+            break;
+
+    for (i = is; i <= ie; i++)
+        sl_string_append(me, chs[i].buf);
+
+    sl_memory_delete(chs);
+}
+
+SL_API void sl_string_trim(sl_string_t *me, sl_char_t ch)
+{
+    sl_char_t *chs;
+    sl_i       c, i, is, ie;
+
+    to_char_array(me, &chs, &c);
+
+    sl_memory_zero(me->c_str, me->sz);
+    me->pos = 0;
+
+    for (is = 0; is < c; is++)
+        if (!sl_char_equals(chs[is], ch))
+            break;
+
+    for (ie = c - 1; ie >= 0; ie--)
+        if (!sl_char_equals(chs[ie], ch))
+            break;
+
+    for (i = is; i <= ie; i++)
+        sl_string_append(me, chs[i].buf);
+
+    sl_memory_delete(chs);
 }
 
 SL_API void sl_string_destruct(sl_string_t *me)

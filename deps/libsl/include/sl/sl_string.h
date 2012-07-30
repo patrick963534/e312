@@ -19,6 +19,8 @@ typedef struct sl_char_t
 */
 SL_API sl_char_t    sl_char_from(const sl_c *s);
 
+SL_API sl_b         sl_char_equals(sl_char_t ch1, sl_char_t ch2);
+
 /**
  Description:
      Both sl_c* and sl_string_t are used to identify a UTF-8.
@@ -84,6 +86,10 @@ SL_API sl_i         sl_string_char_count(sl_string_t *me);
  both UTF-8 string.
 */
 SL_API sl_b         sl_string_equals(const sl_string_t *s1, const sl_string_t *s2);
+
+SL_API void sl_string_trim_string(sl_string_t *me, sl_string_t *trim);
+
+SL_API void         sl_string_trim(sl_string_t *me, sl_char_t ch);
 
 /**
  Destructor of sl_string_t, it will be invoked automaticlly  

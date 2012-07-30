@@ -29,6 +29,7 @@ static void test_char(void)
 static void test_string(void)
 {
     sl_string_t *str;
+    sl_string_t *tmp;
     sl_char_t    ch;
 
     str = sl_string_new("1234567890123456");
@@ -78,6 +79,22 @@ static void test_string(void)
     sl_string_set_char(str, 1, sl_char_from("蛇"));
     cu_string_equals("龙蛇渊", str->c_str);
     sl_object_delete(str);
+
+    str = sl_string_new(" 牛  龙之谷 猪 ");
+    sl_string_trim(str, sl_char_from(" "));
+    sl_string_trim(str, sl_char_from("猪"));
+    sl_string_trim(str, sl_char_from("牛"));
+    sl_string_trim(str, sl_char_from(" "));
+    cu_string_equals("龙之谷", str->c_str);
+    sl_object_delete(str);
+
+    str = sl_string_new(" 牛  龙之谷 猪 ");
+    tmp = sl_string_new(" 猪牛");
+    sl_string_trim_string(str, tmp);
+    cu_string_equals("龙之谷", str->c_str);
+    sl_object_delete(str);
+    sl_object_delete(tmp);
+
 }
 
 static void test_list()
