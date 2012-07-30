@@ -147,14 +147,16 @@ SL_API void* sl_list_begin(sl_list_t *me)
     if (me->count == 0)
         return NULL;
 
-    me->pos = me->head->next;
+    me->pos   = me->head->next;
+    me->pos_s = me->pos->next;
 
     return me->pos->data;
 }
 
 SL_API void* sl_list_next(sl_list_t *me)
 {
-    me->pos = me->pos->next;
+    me->pos   = me->pos_s;
+    me->pos_s = me->pos->next;
 
     return me->pos->data;
 }

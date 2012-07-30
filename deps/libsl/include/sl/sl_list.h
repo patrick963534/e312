@@ -14,6 +14,7 @@ typedef struct sl_list_t
     sl_string_t     *tag;
     sl_list_node_s  *head;
     sl_list_node_s  *pos;
+    sl_list_node_s  *pos_s;
     int              count; /* private, don't use it directly. */
 } sl_list_t;
 
