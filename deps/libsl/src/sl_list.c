@@ -62,13 +62,13 @@ SL_API int sl_list_index(sl_list_t *me, void *v)
     while (cur != me->head)
     {
         if (cur->data == v)
-            break;
+            return i;
 
         i++;
         cur = cur->next;
     }
 
-    return i;
+    return -1;
 }
 
 SL_API void sl_list_remove(sl_list_t *me, void *v)
