@@ -20,7 +20,7 @@ typedef struct sl_list_t
 SL_API sl_list_t*       sl_list_new(const char *tag);
 SL_API void             sl_list_destruct(sl_list_t *me);
 SL_API void             sl_list_add(sl_list_t *me, void *v);
-SL_API int              sl_list_index(sl_list_t *me, void *v);
+SL_API sl_i             sl_list_index(sl_list_t *me, void *v);
 SL_API sl_b             sl_list_contains(sl_list_t *me, void *v);
 SL_API void             sl_list_remove(sl_list_t *me, void *v);
 SL_API void*            sl_list_at(sl_list_t *me, int index);
