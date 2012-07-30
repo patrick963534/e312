@@ -62,3 +62,12 @@ done:
     return s;
 }
 
+SL_API void sl_file_read(sl_file_t *me, sl_c *buf, sl_i sz)
+{
+    slc_fread(buf, (sl_ui)sz, 1, me->fd);
+}
+
+SL_API void sl_file_write(sl_file_t *me, const sl_c *buf, sl_i sz)
+{
+    slc_fwrite(buf, (sl_ui)sz, 1, me->fd);
+}
