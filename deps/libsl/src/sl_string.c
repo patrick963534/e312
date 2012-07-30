@@ -257,6 +257,9 @@ SL_API sl_b sl_string_equals(const sl_string_t *str1, const sl_string_t *str2)
 
     assert(str1 != 0 && str2 != 0);
 
+    if (str1->pos != str2->pos)
+        return 0;
+
     s = str1->c_str;
     d = str2->c_str;
     
