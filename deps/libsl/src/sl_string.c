@@ -190,7 +190,7 @@ SL_API sl_char_t sl_string_get_char(sl_string_t *me, sl_i n)
     return ch;
 }
 
-SL_API void sl_string_set_char(sl_string_t *me, sl_i n, const sl_char_t ch)
+SL_API void sl_string_set_char(sl_string_t *me, sl_i n, sl_char_t ch)
 {
     sl_uc  *s, *sp;
     sl_i    c, nb, i;
@@ -250,10 +250,10 @@ SL_API sl_i sl_string_char_count(sl_string_t *me)
     return n;
 }
 
-SL_API sl_b sl_string_equals(const sl_string_t *str1, const sl_string_t *str2)
+SL_API sl_b sl_string_equals(sl_string_t *str1, sl_string_t *str2)
 {
-    const sl_c *s;
-    const sl_c *d;
+    sl_c *s;
+    sl_c *d;
 
     assert(str1 != 0 && str2 != 0);
 
