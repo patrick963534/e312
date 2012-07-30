@@ -87,7 +87,7 @@ SL_API sl_i         sl_string_char_count(sl_string_t *me);
 */
 SL_API sl_b         sl_string_equals(const sl_string_t *s1, const sl_string_t *s2);
 
-SL_API void sl_string_trim_string(sl_string_t *me, sl_string_t *trim);
+SL_API void         sl_string_trim_string(sl_string_t *me, sl_string_t *trim);
 
 SL_API void         sl_string_trim(sl_string_t *me, sl_char_t ch);
 

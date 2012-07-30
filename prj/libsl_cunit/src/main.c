@@ -93,7 +93,6 @@ static void test_string(void)
     cu_string_equals("龙之谷", str->c_str);
     sl_object_delete(str);
     sl_object_delete(tmp);
-
 }
 
 static void test_list()
