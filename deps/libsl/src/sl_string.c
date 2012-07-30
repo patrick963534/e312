@@ -192,12 +192,10 @@ SL_API sl_char_t sl_string_get_char(sl_string_t *me, sl_i n)
 
 SL_API void sl_string_set_char(sl_string_t *me, sl_i n, const sl_char_t ch)
 {
-    sl_uc  *s;
-    sl_uc  *sp;
+    sl_uc  *s, *sp;
     sl_i    c, nb, i;
 
-    s  = sl_memory_new(me->sz);
-    sp = s;
+    sp = s = sl_memory_new(me->sz);
     sl_memory_copy(s, me->sz, me->c_str, me->sz);
 
     sl_memory_zero(me->c_str, me->sz);
