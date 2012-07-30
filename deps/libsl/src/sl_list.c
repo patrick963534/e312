@@ -51,6 +51,11 @@ SL_API void sl_list_add(sl_list_t *me, void *v)
     me->count++;
 }
 
+SL_API int sl_list_contains(sl_list_t *me, void *v)
+{
+    return (sl_list_index(me, v) != -1);
+}
+
 SL_API int sl_list_index(sl_list_t *me, void *v)
 {
     sl_list_node_s *cur;
