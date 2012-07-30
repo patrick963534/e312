@@ -356,6 +356,18 @@ SL_API void sl_string_trim(sl_string_t *me, sl_char_t ch)
     sl_memory_delete(chs);
 }
 
+SL_API void sl_string_trim_end_newline_char(sl_string_t *me)
+{
+    while (me->pos > 0)
+    {
+        if (me->c_str[me->pos - 1] != '\r' && 
+            me->c_str[me->pos - 1] != '\n')
+            break;
+
+        me->c_str[--me->pos] = 0;
+    }
+}
+
 SL_API void sl_string_destruct(sl_string_t *me)
 {
     sl_memory_delete(me->c_str);

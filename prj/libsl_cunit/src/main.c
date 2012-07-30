@@ -2,6 +2,7 @@
 #include <sl/sl_string.h>
 #include <sl/sl_memory.h>
 #include <sl/sl_list.h>
+#include <sl/sl_file.h>
 #include <sl/sl_log.h>
 #include <cu/cu_all.h>
 
@@ -142,13 +143,31 @@ static void test_list()
     }
 }
 
+static void test_file()
+{
+    sl_file_t   *file;
+    sl_string_t *line;
+
+    file = sl_file_new("bin/libc.txt");
+
+    while (!sl_file_eof(file))
+    {
+        line = sl_file_next_line(file);
+        printf("%s\n", line->c_str);
+        sl_object_delete(line);
+    }
+
+    sl_object_delete(file);
+}
+
 int a = 1 << 2;
 
-int main()
+int main(int argc, char **argv)
 {
     test_string();
     test_char();
     test_list();
+    test_file();
 
     sl_memory_leak_report();
 
