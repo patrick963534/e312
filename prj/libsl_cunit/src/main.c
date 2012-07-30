@@ -84,8 +84,7 @@ static void test_string(void)
     sl_string_trim(str, sl_char_from(" "));
     sl_string_trim(str, sl_char_from("猪"));
     sl_string_trim(str, sl_char_from("牛"));
-    sl_string_trim(str, sl_char_from(" "));
-    cu_string_equals("龙之谷", str->c_str);
+    cu_string_equals("  龙之谷 ", str->c_str);
     sl_object_delete(str);
 
     str = sl_string_new(" 牛  龙之谷 猪 ");
