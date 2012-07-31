@@ -1,0 +1,139 @@
+#include <sl/platform/sl_path.h>
+#include <sl/sl_list.h>
+#include <sl/sl_libc_string.h>
+#include <sl/sl_libc_stdio.h>
+#include <sl/sl_libc_stdlib.h>
+#include <sys/dir.h>
+#include <sys/stat.h>
+
+static int IS_DIR(const sl_c* path)
+{
+    struct stat st;
+    lstat(path, &st);
+    return S_ISDIR(st.st_mode);
+}
+
+static sl_b create_single_folder(const sl_c *path)
+{
+    struct stat st;
+    sl_b status = 1;
+
+    if (0 != stat(path, &st))
+    {
+        /* Directory does not exist */
+        if (mkdir(path, 0777) != 0)
+            status = 0;
+    }
+    else if (!S_ISDIR(st.st_mode))
+    {
+        status = 0;
+    }
+
+    return status;
+}
+
+SL_API sl_b sl_path_create_folder(const sl_c *folder_path, sl_b recursive)
+{
+    if (!recursive) {
+        return create_single_folder(folder_path);
+    }
+    else {
+        sl_c *path = slc_strdup(folder_path);
+        sl_c *sp = path;
+        sl_c *next = sp;
+        sl_b status = 1;
+        
+        while (status && NULL != (sp = slc_strchr(next, '/'))) {
+            if (sp != next) {
+                *sp = '\0';
+                status = create_single_folder(path);
+                *sp = '/';
+            }
+            next = sp + 1;
+        }
+
+        if (status)
+            status = create_single_folder(path);
+
+        slc_free(path);
+
+        return status;
+    }    
+}
+
+SL_API sl_string_t* sl_path_get_folder(const sl_c *file_path)
+{
+    sl_c *p = slc_strdup(file_path);
+    sl_c *sp;
+
+
+
+    if (NULL != (sp = slc_strrchr(p, '/'))) {
+        *sp = '\0';
+    }
+    else {
+        slc_free(p);
+        p = slc_strdup("./");
+    }
+        
+    return p;
+}
+
+SL_API void sl_path_all_folders(sl_list_t *list, const sl_c *folder_path, sl_b recursive)
+{
+    DIR *pdir;
+    sl_c temp[512];
+    struct dirent *pdirent;
+
+    pdir = opendir(folder_path);
+
+    if (!pdir) {
+        printf("opendir error:%s\n", folder_path);
+        closedir(pdir);
+    }
+
+    while(NULL != (pdirent = readdir(pdir))) {
+        if (slc_strcmp(pdirent->d_name, ".") == 0 || 
+            slc_strcmp(pdirent->d_name, "..") == 0)
+            continue;
+
+        slc_sprintf(temp, "%s/%s", folder_path, pdirent->d_name);
+
+        if(IS_DIR(temp) && recursive)
+            sl_path_all_folders(list, temp, recursive);
+        else
+            sl_list_add(list, slc_strdup(temp));
+    }
+
+    closedir(pdir);
+
+}
+
+SL_API void sl_path_all_files(sl_list_t *list, const sl_c *folder_path, sl_b recursive)
+{
+    DIR *pdir;
+    sl_c temp[512];
+    struct dirent *pdirent;
+
+    pdir = opendir(folder_path);
+
+    if (!pdir) {
+        printf("opendir error:%s\n", folder_path);
+        closedir(pdir);
+    }
+
+    while(NULL != (pdirent = readdir(pdir))) {
+        if (slc_strcmp(pdirent->d_name, ".") == 0|| 
+            slc_strcmp(pdirent->d_name, "..") == 0)
+            continue;
+
+        slc_sprintf(temp, "%s/%s", folder_path, pdirent->d_name);
+
+        if(IS_DIR(temp) && recursive)
+            sl_path_all_files(list, temp, recursive);
+        else
+            sl_list_add(list, slc_strdup(temp));
+    }
+
+    closedir(pdir);
+}

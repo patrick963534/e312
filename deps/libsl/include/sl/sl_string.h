@@ -25,14 +25,19 @@ typedef struct sl_string_t
 
 SL_API sl_string_t* sl_string_new(const sl_c *str);
 SL_API sl_string_t* sl_string_format(sl_i sz, const sl_c *fmt, ...);
+SL_API void         sl_string_destruct(sl_string_t *me);
+
 SL_API void         sl_string_append(sl_string_t *me, const sl_c *str);
 SL_API sl_char_t    sl_string_get_char(sl_string_t *me, sl_i n);
 SL_API void         sl_string_set_char(sl_string_t *me, sl_i n, sl_char_t ch);
 SL_API sl_i         sl_string_char_count(sl_string_t *me);
 SL_API sl_b         sl_string_equals(sl_string_t *s1, sl_string_t *s2);
+
+SL_API sl_i         sl_string_index(sl_string_t *sl, sl_char_t ch);
+SL_API sl_i         sl_string_index_end(sl_string_t *sl, sl_char_t ch);
+
 SL_API void         sl_string_trim(sl_string_t *me, sl_char_t ch);
 SL_API void         sl_string_trim_string(sl_string_t *me, sl_string_t *trim);
 SL_API void         sl_string_trim_end_newline_char(sl_string_t *me);
-SL_API void         sl_string_destruct(sl_string_t *me);
 
 #endif

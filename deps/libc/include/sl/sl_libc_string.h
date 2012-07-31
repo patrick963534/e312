@@ -23,5 +23,6 @@
 #define slc_strstr   strstr  /* (const char *str1, const char *str2); */
 #define slc_strtok   strtok  /* (char *str1, const char *str2); */
 #define slc_strxfrm  strxfrm /* (char *str1, const char *str2, size_t n); */
+#define slc_strdup   strdup  /* (const char *s); */
 
 #endif

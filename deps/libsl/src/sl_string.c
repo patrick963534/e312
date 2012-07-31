@@ -375,3 +375,27 @@ SL_API void sl_string_destruct(sl_string_t *me)
     sl_object_destruct(me);
 }
 
+SL_API sl_i sl_string_index(sl_string_t *me, sl_char_t ch)
+{
+    sl_uc *s;
+    sl_i  id;
+
+    id = 0;
+    s  = (sl_uc*)me->c_str;
+
+    while (*s)
+    {
+        if (sl_char_equals(sl_char_from((sl_c*)s), ch))
+            return id;
+
+        s = s + (u8_trail_bytes[*s] + 1);
+        id++;
+    }
+
+    return -1;
+}
+
+SL_API sl_i sl_string_index_end(sl_string_t *me, sl_char_t ch)
+{
+    return -1;
+}

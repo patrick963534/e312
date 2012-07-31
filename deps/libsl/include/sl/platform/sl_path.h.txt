@@ -1,0 +1,16 @@
+#ifndef __SL_PLATFORM_PATH_H__
+#define __SL_PLATFORM_PATH_H__
+
+#include <sl/sl_defs.h>
+#include <sl/sl_list.h>
+#include <sl/sl_string.h>
+
+SL_API sl_b     sl_path_create_folder(const sl_c *folder_path, sl_b recursive);
+SL_API void     sl_path_all_folders(sl_list_t *list, const sl_c *folder_path, sl_b recursive);
+SL_API void     sl_path_all_files(sl_list_t *list, const sl_c *folder_path, sl_b recursive);
+
+SL_API sl_string_t*    sl_path_get_folder(const sl_c *file_path);
+SL_API sl_string_t*    sl_path_get_ext(const sl_c *file_path);
+SL_API sl_string_t*    sl_path_get_base_filename(const sl_c *file_path);
+
+#endif
