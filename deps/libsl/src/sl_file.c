@@ -159,3 +159,26 @@ SL_API sl_ul sl_file_length(sl_file_t *me)
     return l;
 }
 
+SL_API sl_b sl_file_exist(const sl_c *path)
+{
+    sl_b  ret = 0;
+    FILE *fp  = slc_fopen(path, "r");
+
+    if (fp)
+    {
+        slc_fclose(fp);
+        ret = 1;
+    }
+
+    return ret;
+}
+
+SL_API void sl_file_remove(const sl_c *path)
+{
+    slc_remove(path);
+}
+
+SL_API void sl_file_rename(const sl_c *src, const sl_c *dst)
+{
+    slc_rename(src, dst);
+}

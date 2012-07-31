@@ -33,4 +33,8 @@ SL_API void             sl_file_write_int(sl_file_t *me, sl_i v);
 SL_API void             sl_file_write_float(sl_file_t *me, sl_f v);
 SL_API void             sl_file_write_double(sl_file_t *me, sl_d v);
 
+SL_API sl_b             sl_file_exist(const sl_c *path);
+SL_API void             sl_file_remove(const sl_c *path);
+SL_API void             sl_file_rename(const sl_c *src, const sl_c *dst);
+
 #endif
