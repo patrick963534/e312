@@ -1,0 +1,61 @@
+****************************************************************************************************
+
+Unicode
+
+    - Compare to ASCII.
+        ~. ASCII:
+            #. 1 byte. (0 - 255)
+            #. Characters 0~127 are the same characters in the world, 
+            #. Characters 128-255 might be different for different culture. Ex: js, pt.
+
+        ~. Unicode
+            #. 4 bytes. (0 - 400,000,000,000)
+            #. Can indicate all the characters in the world.
+            #. Most of popular system support Unicode. Ex: Windows/Linux/Unix/Symbian/Andoind etc.
+            #. It's the base for all kinds of multi-bytes encoding. 
+            #. Most of fonts file use unicode as its index.
+            #. But waste storage space:
+                  &. For english country, "hello world" unicode string will takes 44 bytes instead of 11 bytes for ASCII.
+
+****************************************************************************************************
+
+UTF-8
+
+    - Concept:
+        ~. It's an encoding for unicode most of time.
+
+    - Reason:
+        ~. To save storage space.
+
+    - Encoding algorithm:
+        ~. Map:
+                00000000 -- 0000007F:   0xxxxxxx
+                00000080 -- 000007FF:   110xxxxx 10xxxxxx
+                00000800 -- 0000FFFF:   1110xxxx 10xxxxxx 10xxxxxx
+                00010000 -- 001FFFFF:   11110xxx 10xxxxxx 10xxxxxx 10xxxxxx
+
+
+****************************************************************************************************
+
+u8 library usage
+
+    - APIs:
+        size_t   hz2_u8_length(const char *s);
+        int      hz2_u8_next(const char *us, size_t *pos);
+        size_t   hz2_u8_to_ucs4(int *dest, size_t sz, const char *src, size_t srcsz);
+        size_t   hz2_u8_from_ucs4(char *dest, size_t sz, const int *src, size_t srcsz);
+        size_t   hz2_u8_encode(char *dest, int ch);
+        int      hz2_u8_decode(const char *src);
+        size_t   hz2_u8_width(int c);
+        size_t   hz2_u8_append(char *us, int c, size_t size);
+        size_t   hz2_u8_offset(const char *str, size_t charnum);
+        size_t   hz2_u8_charnum(const char *s, size_t offset);
+        char*    hz2_u8_find(const char *s, uint32_t ch);
+        int      hz2_u8_stricmp(const char* a, const char* b);
+        char*    hz2_u8_from_utf16(char* result, const wchar_t* start, size_t size);
+        
+    - concept:
+        - assume all of the "char*" array are UTF8 string.
+        - ucs4 means Unicode integer.
+
+    - 
