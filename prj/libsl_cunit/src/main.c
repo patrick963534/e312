@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
 #include <sl/sl_string.h>
 #include <sl/sl_memory.h>
 #include <sl/sl_list.h>
@@ -145,25 +147,45 @@ static void test_list()
 
 static void test_file()
 {
-    sl_file_t   *file;
+    sl_file_t   *file, *new_file;
     sl_string_t *line;
 
-    file = sl_file_new("bin/libc.txt");
+    file     = sl_file_new("bin/libc.txt");
+    new_file = sl_file_new("bin/temp.txt");
+
 
     while (!sl_file_eof(file))
     {
-        line = sl_file_next_line(file);
-        printf("%s\n", line->c_str);
+        line = sl_file_read_line(file);
+        sl_file_write_line(new_file, line);
         sl_object_delete(line);
     }
 
+    cu_int_equals((int)sl_file_length(file), (int)sl_file_length(new_file));
+
     sl_object_delete(file);
+    sl_object_delete(new_file);
+}
+
+static void test_byte_endian()
+{
+    sl_c *buf;
+    sl_i v;
+
+    v = 0x12345678;
+    buf = (sl_c*)&v;
+
+    cu_int_equals(0x78, buf[0]);
+    cu_int_equals(0x56, buf[1]);
+    cu_int_equals(0x34, buf[2]);
+    cu_int_equals(0x12, buf[3]);
 }
 
 int a = 1 << 2;
 
 int main(int argc, char **argv)
 {
+    test_byte_endian();
     test_string();
     test_char();
     test_list();
